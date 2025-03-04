@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import ParentNode, LeafNode, HTMLNode
+from src.htmlnode import ParentNode, LeafNode, HTMLNode
 
 class TestParentNode(unittest.TestCase):
     
