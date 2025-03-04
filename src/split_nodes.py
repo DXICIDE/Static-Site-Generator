@@ -38,3 +38,50 @@ def extract_markdown_links(text):
     matches = re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)", text)
     return matches
 
+def split_nodes_image(old_nodes):
+    result = []
+    for node in old_nodes:
+        
+        text = node.text       
+        if text == "":
+            continue
+        
+        if extract_markdown_images(node.text) == []:
+            result.append(node)
+            continue
+        
+
+        images = extract_markdown_images(text)
+        for image in images:
+            sections = text.split(f"![{image[0]}]({image[1]})", 1)
+            result.append(TextNode(sections[0], TextType.NORMAL_TEXT))
+            result.append(TextNode(image[0], TextType.IMAGES, image[1])),
+            text = sections[1]
+        
+        if text != "":
+            result.append(TextNode(text, TextType.NORMAL_TEXT))  
+    return result
+
+def split_nodes_links(old_nodes):
+    result = []
+    for node in old_nodes:
+        
+        text = node.text       
+        if text == "":
+            continue
+        
+        if extract_markdown_links(node.text) == []:
+            result.append(node)
+            continue
+        
+
+        links = extract_markdown_links(text)
+        for link in links:
+            sections = text.split(f"[{link[0]}]({link[1]})", 1)
+            result.append(TextNode(sections[0], TextType.NORMAL_TEXT))
+            result.append(TextNode(link[0], TextType.LINKS, link[1])),
+            text = sections[1]
+        
+        if text != "":
+            result.append(TextNode(text, TextType.NORMAL_TEXT))  
+    return result

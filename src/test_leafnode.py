@@ -3,7 +3,7 @@ import unittest
 from htmlnode import LeafNode
 
 
-class TestHtmlNode(unittest.TestCase):
+class TestLeafNode(unittest.TestCase):
     def test_Leaf_node(self):
         node = LeafNode("p", "This is a paragraph of text.")
         self.assertEqual(node.to_html(), '<p>This is a paragraph of text.</p>') 
