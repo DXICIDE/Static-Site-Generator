@@ -1,5 +1,6 @@
 import unittest
 from src.split_nodes import extract_markdown_images, extract_markdown_links
+from src.blocktype import block_to_block_type, BlockType
 
 
 class TestRegex(unittest.TestCase):
@@ -16,7 +17,7 @@ class TestRegex(unittest.TestCase):
         )
         self.assertListEqual([("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")], matches)
 
-
+    
 if __name__ == "__main__":
     unittest.main()
 
