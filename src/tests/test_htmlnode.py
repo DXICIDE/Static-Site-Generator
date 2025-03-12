@@ -5,11 +5,11 @@ from src.htmlnode import *
 
 class TestHtmlNode(unittest.TestCase):
     def test_html_node(self):
-        node = HTMLNode("a", "Hi, this is a paragraph", None ,{"href": "https://www.google.com"})
+        node = HTMLNode("p", "Hi, this is a paragraph", None ,{"href": "https://www.google.com"})
         self.assertEqual(node.props_to_html(), ' href="https://www.google.com"') 
     
     def test_multiple_html_node(self):
-        node = HTMLNode("a", "Hi, this is a paragraph", None ,{"href": "https://www.google.com", "target": "_blank"})
+        node = HTMLNode("p", "Hi, this is a paragraph", None ,{"href": "https://www.google.com", "target": "_blank"})
         self.assertEqual(node.props_to_html(), ' href="https://www.google.com" target="_blank"') 
 
     def test_none_html_node(self):

@@ -1,13 +1,25 @@
-from src.textnode import *
-from src.htmlnode import *
-from src.split_nodes import split_nodes_delimiter, split_nodes_image
-from src.text_to_textnodes import *
+from .split_nodes import split_nodes_delimiter, split_nodes_image
+from .text_to_textnodes import *
+from .blocktype import *
 
 def main():
     
-    text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
-    nodes = text_to_textnodes(text)
-    print(nodes)
+    md = """
+```
+This is **bolded** paragraph
+text in a p
+tag here
+```
+
+"""
+
+    node = markdown_to_html_node(md)
+    html = node.to_html()
+    print(html)
+    #self.assertEqual(
+    #    html,
+    #    "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
+    #)
     
 if __name__ == "__main__":
     main()

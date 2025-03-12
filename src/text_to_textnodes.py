@@ -1,5 +1,5 @@
-from src.textnode import *
-from src.split_nodes import *
+from .textnode import *
+from .split_nodes import *
 
 
 def text_to_textnodes(text):
