@@ -22,9 +22,10 @@ def block_to_block_type(block):
     if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
     
+
     is_quote = True
     for line in split_list:
-        if line.startswith("> ") == False:
+        if line.startswith(">") == False:
             is_quote = False
             break
     if is_quote:
@@ -92,7 +93,7 @@ def markdown_to_html_node(markdown):
                 div_node.children.append(pre_node)
 
             case BlockType.QUOTE:    
-                block = block.replace("> ", "")
+                block = block.replace(">", "")
                 children = text_to_children(block)
                 parent_node = ParentNode("blockquote", children) 
                 div_node.children.append(parent_node)

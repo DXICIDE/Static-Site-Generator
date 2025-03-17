@@ -47,7 +47,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_TextNode_to_html_images(self):
         node = TextNode("some link to a img", TextType.IMAGES, "https://www.boot.dev")
-        self.assertEqual(node.text_node_to_html_node(), LeafNode("img", None, {"src": "https://www.boot.dev", "alt": "some link to a img"}))
+        self.assertEqual(node.text_node_to_html_node(), LeafNode("img", "", {"src": "https://www.boot.dev", "alt": "some link to a img"}))
 
     def test_textnode(self):
         node = TextNode("This is text with a `code block` word", TextType.NORMAL_TEXT)

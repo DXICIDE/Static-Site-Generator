@@ -37,6 +37,6 @@ class TextNode:
             case TextType.LINKS:
                 return LeafNode("a", text_node.text, {"href": f"{text_node.url}"})
             case TextType.IMAGES:
-                return LeafNode("img", None, {"src": f"{text_node.url}", "alt": f"{text_node.text}"})
+                return LeafNode("img", "", {"src": f"{text_node.url}", "alt": f"{text_node.text}"})
             case _:
                 raise Exception("Unknown TextType")

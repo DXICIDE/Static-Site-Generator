@@ -7,8 +7,11 @@ import shutil
 def main():
     folder_cleanup()
     recursive_copy("static", "public")
-    yo = extract_title("# Hello f ")
-    print(yo)
+    generate_page("content/index.md", "template.html" , "public/index.html")
+    generate_page("content/blog/glorfindel/index.md", "template.html" , "public/blog/glorfindel/index.html")
+    generate_page("content/blog/tom/index.md", "template.html" , "public/blog/tom/index.html")
+    generate_page("content/blog/majesty/index.md", "template.html" , "public/blog/majesty/index.html")
+    generate_page("content/contact/index.md", "template.html" , "public/contact/index.html")
 
 def folder_cleanup():
     if os.path.exists("public"):
@@ -37,6 +40,32 @@ def extract_title(markdown):
             return output.strip()
     raise Exception("No title")
     
+def generate_page(from_path, template_path, dest_path):
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+    
+    file = open(from_path, "r")
+    content = file.read()
+    title = extract_title(content)
+    file.close()
+
+    file_template = open(template_path, "r")
+    content_template = file_template.read()
+    file_template.close()
+
+    content = markdown_to_html_node(content)
+    content = content.to_html()
+
+    content_template = content_template.replace("{{ Title }}", title)
+    content_template = content_template.replace("{{ Content }}", content)
+
+    file = dest_path
+    dest_path = os.path.dirname(dest_path) 
+    print(dest_path)
+    os.makedirs(dest_path, 0o777, True)
+    f = open(file, "a")
+    f.write(content_template)
+    f.close()
+
 if __name__ == "__main__":
     main()
 
