@@ -93,7 +93,8 @@ def markdown_to_html_node(markdown):
                 div_node.children.append(pre_node)
 
             case BlockType.QUOTE:    
-                block = block.replace(">", "")
+                block = block.replace(">", "").strip()
+                block = ' '.join(block.split())
                 children = text_to_children(block)
                 parent_node = ParentNode("blockquote", children) 
                 div_node.children.append(parent_node)

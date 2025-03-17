@@ -7,11 +7,7 @@ import shutil
 def main():
     folder_cleanup()
     recursive_copy("static", "public")
-    generate_page("content/index.md", "template.html" , "public/index.html")
-    generate_page("content/blog/glorfindel/index.md", "template.html" , "public/blog/glorfindel/index.html")
-    generate_page("content/blog/tom/index.md", "template.html" , "public/blog/tom/index.html")
-    generate_page("content/blog/majesty/index.md", "template.html" , "public/blog/majesty/index.html")
-    generate_page("content/contact/index.md", "template.html" , "public/contact/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
 def folder_cleanup():
     if os.path.exists("public"):
@@ -41,6 +37,7 @@ def extract_title(markdown):
     raise Exception("No title")
     
 def generate_page(from_path, template_path, dest_path):
+    dest_path = dest_path.replace(".md", ".html")
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     
     file = open(from_path, "r")
@@ -62,9 +59,23 @@ def generate_page(from_path, template_path, dest_path):
     dest_path = os.path.dirname(dest_path) 
     print(dest_path)
     os.makedirs(dest_path, 0o777, True)
-    f = open(file, "a")
+    f = open(file, "w")
     f.write(content_template)
     f.close()
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    if os.path.exists(dir_path_content):
+        dir_list = os.listdir(dir_path_content)
+        for item in dir_list:
+            source_item = os.path.join(dir_path_content, item)
+            dest_item = os.path.join(dest_dir_path, item)
+            if os.path.isfile(source_item):
+                if source_item.endswith(".md"):
+                    generate_page(source_item, template_path, dest_item)
+            else:
+                os.makedirs(dest_item, 0o777, True)
+                print(f"Created directory: {dest_item}")
+                generate_pages_recursive(source_item, template_path, dest_item)
 
 if __name__ == "__main__":
     main()
